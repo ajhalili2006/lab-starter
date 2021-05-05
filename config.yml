@@ -71,7 +71,7 @@ steps:
 #  - type: # the type of action, full list at https://lab.github.com/docs/actions
 
 # Step 5: EDIT HERE - INTERNAL COMMENT FOR STEP 5
- - title: Final thoughts
+ - title: Course Recap
   description: Congratulations on making your own code-server repo through this course! Read the quick recap of the course, add some tools, and even submit to Code Server Boilerplates Registry to get your repo registered.
 #  event: # the event that will trigger the actions to be executed, full list at https://developer.github.com/v3/activity/events/types/
 #  actions: # a list of the actions that will occur when the step is triggered by an event
