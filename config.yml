@@ -1,4 +1,4 @@
-title: # a name for your Learning Lab course
+title: Creating your own code-server boilerplate
 tagline: # a short description for your Learning Lab course, displayed on the course catalog
 description: # a longer description for your Learning Lab course, displayed on the course's landing page
 
@@ -7,53 +7,73 @@ description: # a longer description for your Learning Lab course, displayed on t
 # This will be used when the repository is crated for each individual learner
 
 template:
-  name:     # the name of the repository when it is created for the learner
-  repo:     # the name of the template repository from which to clone for the learner
+
+  name: deploy-code-server-course # the name of the repository when it is created for the learner
+  repo: starter-pack-course # the name of the template repository from which to clone for the learner
 
 # `before` block
 # Actions to take place after the learner registers, but before they start interacting with their repo
 
+helpUrl: Ask questions in The Pins Team Community Chat on Discord
+helpText: https://rtapp.tk/community-chat
+
 before:
-- type: # the type of action, full list at https://lab.github.com/docs/actions/
-  # some actions require additional options, those should appear below `type:`
-  # you can execute multiple actions in the `before` block
+- type: updateBranchProtection
+    store:
+      repositoryUrl: '{{ payload.repository.html_url }}'
+      actionsUrl: '{{ payload.repository.html_url }}/actions'
+      branchSettingsUrl: '{{ payload.repository.html_url }}/settings/branches'
+- type: createIssue
+    title: Welcome to the course!
+    body: 00_welcome-issue.md
+    store:
+      welcomeIssueUrl: "%result.data.html_url%"
+      welcomeIssueNumber: "%result.data.number%"
+    data:
+      quicklink: "{{ store.repositoryUrl }}/new/main?filename=Dockerfile"
+    comments:
+      - 00_coder-101.md
+      - 00_welcome-activity.md
 
 # Steps for the course
 # A list of steps that take the learner through the course
 # Create one step for each action that a learner will complete
 
 steps:
-# Step 1: INTERNAL COMMENT DESCRIBING STEP 
-- title: # the title of the step, shown to the learner in the course progress page
-  description: # a description of the step, shown to the learner in the course progress page
+# Step 1: EDIT HERE - INTERNAL COMMENT DESCRIBING STEP
+- title: Introduction
+  description: An quick kickstart about code-server and Coder itself in general.
   event: # the event that will trigger the actions to be executed, full list at https://developer.github.com/v3/activity/events/types/
+      - pull_request.opened
+      - pull_request.edited
+  link: "{{store.welcomeIssueUrl}}"
   actions: # a list of the actions that will occur when the step is triggered by an event
   - type: # the type of action, full list at https://lab.github.com/docs/actions
 
-# Step 2: INTERNAL COMMENT FOR STEP 2
-# - title: # the title of the step, shown to the learner in the course progress page
-#  description: # a description of the step, shown to the learner in the course progress page
+# Step 2: EDIT HERE -INTERNAL COMMENT FOR STEP 2
+ - title: Creating an Dockerfile
+   description: To build your own code-server container, we need to build our Dockerfile with an base image.
 #  event: # the event that will trigger the actions to be executed, full list at https://developer.github.com/v3/activity/events/types/
 #  actions: # a list of the actions that will occur when the step is triggered by an event
 #  - type: # the type of action, full list at https://lab.github.com/docs/actions
 
-# Step 3: INTERNAL COMMENT FOR STEP 3
-# - title: # the title of the step, shown to the learner in the course progress page
-#  description: # a description of the step, shown to the learner in the course progress page
+# Step 3: EDIT HERE - INTERNAL COMMENT FOR STEP 3
+ - title: Test the image build with GitHub Actions
+   description: After we crafted our Dockerfipe, it's time to build it to ensure the our hand-crafted Dockerfile succeds to build.
 #  event: # the event that will trigger the actions to be executed, full list at https://developer.github.com/v3/activity/events/types/
 #  actions: # a list of the actions that will occur when the step is triggered by an event
 #  - type: # the type of action, full list at https://lab.github.com/docs/actions
 
-# Step 4: INTERNAL COMMENT FOR STEP 4
-# - title: # the title of the step, shown to the learner in the course progress page
-#  description: # a description of the step, shown to the learner in the course progress page
+# Step 4: EDIT HERE - INTERNAL COMMENT FOR STEP 4
+ - title: Deploying to an PaaS service
+   description: "After we ran our CI through GitHub Actions if our Dockerfile is fine, let turn this Dockerfile into an an code-server instance in an PaaS service. In this tutorial, we'll use Railway as an example."
 #  event: # the event that will trigger the actions to be executed, full list at https://developer.github.com/v3/activity/events/types/
 #  actions: # a list of the actions that will occur when the step is triggered by an event
 #  - type: # the type of action, full list at https://lab.github.com/docs/actions
 
-# Step 5: INTERNAL COMMENT FOR STEP 5
-# - title: # the title of the step, shown to the learner in the course progress page
-#  description: # a description of the step, shown to the learner in the course progress page
+# Step 5: EDIT HERE - INTERNAL COMMENT FOR STEP 5
+ - title: Course Recap
+  description: Congratulations on making your own code-server repo through this course! Read the quick recap of the course, add some tools, and even submit to Code Server Boilerplates Registry to get your repo registered.
 #  event: # the event that will trigger the actions to be executed, full list at https://developer.github.com/v3/activity/events/types/
 #  actions: # a list of the actions that will occur when the step is triggered by an event
 #  - type: # the type of action, full list at https://lab.github.com/docs/actions
